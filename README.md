@@ -35,6 +35,24 @@ Vite é uma revolucionária e moderna ferramenta de *build*. Ao invés das opç�
 - **Axios** para requisições unificadas no back-end.
 - **CSS Vanilla (Metodologia BEM)**
 
+## 📂 Estrutura de Pastas e Padrões de Projeto
+
+A arquitetura das pastas na raiz do projeto (`app/`) foi desenhada com grande rigor para evitar misturas de responsabilidade (o temido padrão "espaguete"). O objetivo é garantir extrema manutenibilidade a longo prazo e escala de equipe:
+
+```text
+app/
+├── components/   # Componentes "puros" (Design System interno). Ex: Header, MovieItem. Eles só desenham UI e recebem props, sem conhecimento das APIs.
+├── config/       # Ponto de acesso às chaves e configurações base (Axios). Usa `.server.ts` para proibir categoricamente a injeção do arquivo no Front-end.
+├── services/     # Serviços de abstração de dados (As requisições à TMDB). Também empacotadas via `.server.ts`, isolam os payloads do ambiente visual.
+├── views/        # As páginas ativas das Rotas. Aqui orquestramos tudo, ligando o ambiente SSR do servidor (Loaders) e injetando a resposta nos Components.
+├── app.css       # Diretriz estilística macro da aplicação (BEM base, variáveis, cores globais e root resets).
+├── root.tsx      # Entrypoint geral que segura o Header no topo e troca o miolo do conteúdo dependendo da rota ativa fornecida pelo React Router.
+└── routes.ts     # A árvore da navegação mapeada em um único arquivo de índice, simplificando rastreabilidade de URLs.
+```
+
+### Por que separamos "Views" de "Components"?
+No mercado profissional, misturar páginas grandiosas com pequenos botões na mesma pasta torna tudo caótico. Adotamos o padrão de que apenas as **Views** são inteligentes (Stateful) — elas é que lidam com lógica de rotas, Loader Data e regras de negócios pesadas. Os arquivos dentro da pasta **Components**, por outro lado, são perfeitamente "burros" (Stateless), nascendo projetados do zero com a única finalidade de desenhar elementos bonitos independentemente de onde forem colados.
+
 ## 📦 Requisitos e Como Rodar
 
 ### Versão do Node.js
