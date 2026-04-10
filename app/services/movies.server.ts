@@ -1,4 +1,4 @@
-import moviesApis from "../config/http";
+import moviesApis from "../config/http.server";
 
 function getMoviesPopular() {
     return moviesApis.get('discover/movie', {
