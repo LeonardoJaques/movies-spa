@@ -1,0 +1,29 @@
+.movies {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.movies__title {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: var(--color-text);
+  text-align: center;
+}
+
+.movies__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+.movies__loading, 
+.movies__error, 
+.movies__empty {
+  text-align: center;
+  padding: 4rem;
+  font-size: 1.125rem;
+  color: var(--color-text-muted);
+}
